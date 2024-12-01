@@ -1,5 +1,5 @@
 # Distributed AI-Powered IoT System for Surveillance and Behavior Detection
-![**Click here to watch the video Demo.**](https://example.com/video.mp4)
+![**Click here to watch the video Demo.**](./Ti9Tek_AI/video%20show%20final%20system/demonstration.mp4)
 
 ## Abstract
 
