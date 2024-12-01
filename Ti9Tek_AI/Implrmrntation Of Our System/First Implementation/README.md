@@ -14,6 +14,90 @@ This diagram illustrates the flow of data within the system. Specifically:
 - Data is received on predefined ports, and each port receives its respective frames.
 - AI processing is then applied to the frames, and the processed video is displayed.
 
+### How To Use This:
+This part demonstrates how to stream video from a **publisher** (sending video frames over UDP) to a **subscriber** (receiving and processing the video). The publisher sends video data over multiple ports, and the subscriber receives and processes the video on those ports using the YOLOv5 model for object detection.
+
+#### Requirements
+
+Before running the code, ensure that you have the following Python libraries installed:
+
+- OpenCV: `opencv-python`
+- Numpy: `numpy`
+- PyTorch: `torch`
+- YOLOv5 model from `ultralytics`
+- Optionally, `master.py` (if part of a larger application)
+
+You can install the required packages with:
+
+```bash
+pip install opencv-python numpy torch
+```
+
+#### How to Run
+
+##### 1. Running the Publisher
+
+The **publisher** will be run on multiple terminals, each sending video data to the **subscriber** over a different UDP port. In each terminal, use the following steps:
+
+###### Step 1: Open Multiple Terminals
+
+You can run the **publisher** in as many terminals as you want. For example, if you want to stream video on three different ports (5001, 5002, and 5003), you need to open three separate terminals.
+
+###### Step 2: Run the Publisher on Each Terminal
+
+In each terminal, run the `publisherUDP.py` script with the desired port:
+
+```bash
+python publisherUDP.py
+```
+
+The publisher will send the video data from the default webcam (or another video source) to the specified receiver's IP address and port.
+
+- In the example, the receiver is set to `localhost`, but you can change this to the IP address of the **subscriber**.
+- The default port for the publisher is 5001, but you can adjust it in the `sender.py` script as needed.
+
+Example for running the publisher on three terminals:
+
+- **Terminal 1**:
+  ```bash
+  python publisherUDP.py
+  ```
+
+- **Terminal 2**:
+  ```bash
+  python publisherUDP.py
+  ```
+
+- **Terminal 3**:
+  ```bash
+  python publisherUDP.py
+  ```
+
+Each terminal will be sending video data to the **subscriber** on different ports (`5001`, `5002`, and `5003` in this case).
+
+##### 2. Running the Subscriber
+
+The **subscriber** will receive the video data sent from the **publisher** and process it using YOLOv5 for object detection.
+
+###### Step 1: Open a Terminal for the Subscriber
+
+You only need one terminal to run the **subscriber**.
+
+###### Step 2: Run the Subscriber Script
+
+In the subscriber terminal, run the `subscriberUDP.py` script:
+
+```bash
+python subscriberUDP.py
+```
+
+The **subscriber** will listen on multiple ports (e.g., `5001`, `5002`, and `5003` in this case), receive video frames sent by the **publisher**, and process the frames for object detection.
+
+##### Customizing the IP and Ports
+
+- You can change the IP and port configurations in both the **publisher** and **subscriber** scripts. By default, the **subscriber** listens on `localhost` (`0.0.0.0`) on ports `5001`, `5002`, and `5003`.
+- The **publisher** sends video to the **subscriber** at the configured `receiver_ip` (by default `localhost`) and port (`5001` by default).
+
 ### Diagram: UML Diagram of VideoReceiver Architecture
 
 ![UML Diagram of VideoReceiver Architecture](../../images/video%20receiver%20v1.jpg)
